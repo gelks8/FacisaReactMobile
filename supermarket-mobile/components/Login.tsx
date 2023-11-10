@@ -18,7 +18,7 @@ const Login = (): JSX.Element => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Login</Text>
+            <Text style={styles.textTitle}>Login</Text>
             <TextInput style={styles.loginInput} placeholder="E-mail" placeholderTextColor="#9EA1A4"/>
             <TextInput style={styles.loginInput} placeholder="Senha" placeholderTextColor="#9EA1A4"/>
             <Button title="Entrar" size="lg" buttonStyle={styles.loginButton} onPress={navigateToHome}></Button>

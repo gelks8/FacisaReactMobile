@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0B141A',
+        backgroundColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -27,23 +27,22 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 28,
-        color: "#FFF",
+        color: "#202C33",
         textAlign: "center",
         marginBottom: "21%"
     },
-    textFormTitle: {
+    textTitle: {
         fontSize: 28,
-        color: "#FFF",
+        color: "#202C33",
         textAlign: "center",
-        marginBottom: "21%"
+        marginBottom: "13%"
     },
     loginInput: {
-        color: "#FFF",
-        backgroundColor: "#232428",
+        color: "#202C33",
+        backgroundColor: "#757575",
         width: "70%",
         marginBottom: "8%",
         borderWidth: 1,
-        borderColor: "#E9EFF3",
         borderRadius: 3
     }
 });

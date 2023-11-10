@@ -14,7 +14,7 @@ const Carrinho = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Carrinho</Text>
+            <Text style={styles.textTitle}>Carrinho</Text>
             <Button title="Voltar"  size="lg" buttonStyle={styles.backButton} onPress={navigateToHome}></Button>
         </View>
     );

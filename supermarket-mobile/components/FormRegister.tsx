@@ -14,7 +14,7 @@ const FormRegister = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Registrar</Text>
+            <Text style={styles.textTitle}>Registrar</Text>
             <TextInput style={styles.loginInput} placeholder="Nome Completo" placeholderTextColor="#9EA1A4"/>
             <TextInput style={styles.loginInput} placeholder="E-mail" placeholderTextColor="#9EA1A4"/>
             <TextInput style={styles.loginInput} placeholder="Senha" placeholderTextColor="#9EA1A4"/>
