@@ -12,10 +12,6 @@ const ShoppingCart = ({route, navigation}: any) => {
             return total + price;
         }, 0).toFixed(2);
     };
-
-    const handleCheckout = () => {
-        navigation.navigate('Login');
-    }
     
     const renderProductCard = ({item}: {item: any}) => (
         <Card key={item.id} containerStyle={styles.cardContainer}>
@@ -40,7 +36,5 @@ const ShoppingCart = ({route, navigation}: any) => {
         </View>
     )
 }
-
-
 
 export default ShoppingCart

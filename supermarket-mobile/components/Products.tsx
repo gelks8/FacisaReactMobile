@@ -20,7 +20,7 @@ const Products: React.FC<ProductsProps> = ({ onAddToCart, openToast }) => {
 
         fetchData()
     }, [])
-    
+
     return (
         <View>
             {products.map((product: any) => (
@@ -33,6 +33,10 @@ const Products: React.FC<ProductsProps> = ({ onAddToCart, openToast }) => {
                     />
                     <Text style={{ marginBottom: 10, marginTop: 3, alignSelf: "center" }}>Preço: R$ {product.Price}</Text>
                     <Text style={{ marginBottom: 10, alignSelf: "center" }}>Quantidade: {product.Qnt}</Text>
+                    {/* {
+                        favorite ? <IconFav onPress={() => {removeFavorite(product), setFavorite(false)}} name="heart" size={28} color="red" style={{ marginBottom: 3, marginTop: 3, alignSelf: "center" }}></IconFav>:
+                        <IconFav onPress={() => {setFavorites([...favorites, product]), setFavorite(true)}} name="hearto" size={28} style={{ marginBottom: 3, marginTop: 3, alignSelf: "center" }}></IconFav>
+                    } */}
                     <Button onPress={() => {
                         openToast("Produto adicionado ao carrinho!");
                         onAddToCart(product)

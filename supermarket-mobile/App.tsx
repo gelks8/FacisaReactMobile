@@ -9,6 +9,7 @@ import IconButtons from 'react-native-vector-icons/AntDesign';
 import ForgotPassword from './components/ForgotPassword';
 import { useState } from 'react';
 import { View } from 'react-native';
+import Chat from './components/Chat';
 
 const App = ()=> {
   const Stack = createStackNavigator();
@@ -36,13 +37,14 @@ const App = ()=> {
           }
         }} name="Home">
           {
-            () => (
-              <Home shoppingCart={shoppingCart} setShoppingCart={setShoppingCart} favorites={favorites} setFavorites={setFavorites}></Home>
+            ({navigation}) => (
+              <Home navigation={navigation} shoppingCart={shoppingCart} setShoppingCart={setShoppingCart} favorites={favorites} setFavorites={setFavorites}></Home>
             )
           }
         </Stack.Screen>
         <Stack.Screen name="FormRegister" component={FormRegister} options={{headerTitle: 'Registrar', headerTitleAlign: 'center'}}></Stack.Screen>
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerTitle: 'Recuperar Senha', headerTitleAlign: 'center'}}></Stack.Screen>
+        <Stack.Screen name="Chat" component={Chat} options={{headerTitle: 'Chat', headerTitleAlign: 'center'}}></Stack.Screen>
         <Stack.Screen name="ShoppingCart" component={ShoppingCart} options={{headerTitle: 'Carrinho de Compras', headerTitleAlign: 'center'}}></Stack.Screen>
         <Stack.Screen name="Favorites" options={{headerTitle: 'Favoritos', headerTitleAlign: 'center'}}>
           {

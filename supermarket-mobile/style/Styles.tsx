@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 const styles = StyleSheet.create({
     container: {
@@ -72,8 +73,35 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     checkoutButton: {
-        backgroundColor: 'green', // Cor de fundo do botão
+        backgroundColor: 'green',
     },
+
+    //Chat
+    fab: {
+        position: "absolute",
+        bottom: 30,
+        right: 30,
+    },
+    messageTextInputContainer: {
+        justifyContent: 'flex-end',
+        paddingHorizontal: 5,
+        paddingVertical: 5,
+        borderColor: 'transparent',
+        borderTopColor: 'blue',
+        alignItems: 'center',
+        flexDirection: 'row'
+
+    },
+    sendButton: {
+        backgroundColor: Colors.primary,
+        color: Colors.white,
+        height: 40,
+        width: 70,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 20,
+        marginRight: 5,
+    }
 });
 
 export default styles

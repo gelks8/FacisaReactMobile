@@ -1,11 +1,12 @@
 import React from 'react';
 import { Text, ScrollView, ToastAndroid} from 'react-native';
-import { Button } from '@rneui/themed';
+import { FAB } from '@rneui/themed';
 import IconFav from 'react-native-vector-icons/AntDesign';
 import { Card } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import Products from './Products';
+import styles from '../style/Styles';
 
 // const productList = [
 //     {id: 0, name: "Arroz", price: "4,99", qnt: 1000, description: "test", img: "https://propao.agilecdn.com.br/2314_1.jpg"},
@@ -15,7 +16,7 @@ import Products from './Products';
 //     {id: 4, name: "Cafe", price: "4,59", qnt: 800, description: "test", img: "https://propao.agilecdn.com.br/5188_1.jpg"},
 // ]
 
-const Home = ({shoppingCart, setShoppingCart, favorites, setFavorites}: any) => {
+const Home = ({navigation, shoppingCart, setShoppingCart, favorites, setFavorites}: any) => {
 
     const openToast = (message: string) => {
         ToastAndroid.show(message, 3000)
@@ -35,11 +36,24 @@ const Home = ({shoppingCart, setShoppingCart, favorites, setFavorites}: any) => 
         setShoppingCart([...shoppingCart, product]);
     };
 
+    const openChat = () => {
+        navigation.navigate('Chat');
+    }
+
     return (
-        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16 }}>
-            <StatusBar backgroundColor='black'/>
-            <Products onAddToCart={handleAddToCart} openToast={openToast} />
-        </ScrollView>
+        <>
+            <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16 }}>
+                <StatusBar backgroundColor='black'/>
+                <Products onAddToCart={handleAddToCart} openToast={openToast} />
+            </ScrollView>
+            <FAB
+                style={styles.fab}
+                visible={true}
+                icon={{name: 'chat', color: 'white'}}
+                color="green"
+                onPress={() => openChat()}
+            ></FAB>
+        </>
     );
 };
 
