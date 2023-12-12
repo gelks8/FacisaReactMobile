@@ -51,7 +51,29 @@ const styles = StyleSheet.create({
     loginButton: {
         backgroundColor: "#09D261",
         borderRadius: 8,
-    }
+    },
+
+    //Shopping Cart
+    containerShoppingCart: {
+        padding: 16,
+    },
+    cardContainer: {
+        marginBottom: 16,
+    },
+    cardTitle: {
+        fontSize: 18,
+    },
+    footer: {
+        marginTop: 16,
+        alignItems: 'center',
+    },
+    totalText: {
+        fontSize: 18,
+        marginBottom: 8,
+    },
+    checkoutButton: {
+        backgroundColor: 'green', // Cor de fundo do botão
+    },
 });
 
 export default styles
