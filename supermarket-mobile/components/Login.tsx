@@ -17,10 +17,10 @@ const Login = ({navigation}: any) => {
             <Text>Password</Text>
             <TextInput secureTextEntry={true} style={styles.loginInput} placeholder="Senha" placeholderTextColor="black"/>
             <View style={styles.viewRegisterForgot}>
-                <Text onPress={() => {navigation.navigate('formRegister')}} style={styles.registerForgotLink}>Create Account</Text>
-                <Text onPress={() => {navigation.navigate('forgotPassword')}} style={styles.registerForgotLink}>Forgot Password</Text>
+                <Text onPress={() => {navigation.navigate('FormRegister')}} style={styles.registerForgotLink}>Create Account</Text>
+                <Text onPress={() => {navigation.navigate('ForgotPassword')}} style={styles.registerForgotLink}>Forgot Password</Text>
             </View>
-            <Button style={styles.loginButton} title="Login" onPress={() => {navigation.navigate('home')}}></Button>
+            <Button style={styles.loginButton} title="Login" onPress={() => {navigation.navigate('Home')}}></Button>
         </View>
     )
 }
