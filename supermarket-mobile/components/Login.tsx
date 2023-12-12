@@ -2,27 +2,25 @@ import { Text, View, Image, TextInput} from 'react-native';
 import styles from '../style/Styles';
 import { Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
+import IconLogo from 'react-native-vector-icons/AntDesign';
 
-
-const Login = (): JSX.Element => {
-
-    const navigation = useNavigation();
-
-    const navigateToRegister = () => {
-        navigation.navigate('FormRegister' as never);
-    }
-    
-    const navigateToHome = () => {
-        navigation.navigate('Home' as never);
-    }
+const Login = ({navigation}: any) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.textTitle}>Login</Text>
-            <TextInput style={styles.loginInput} placeholder="E-mail" placeholderTextColor="#9EA1A4"/>
-            <TextInput style={styles.loginInput} placeholder="Senha" placeholderTextColor="#9EA1A4"/>
-            <Button title="Entrar" size="lg" buttonStyle={styles.loginButton} onPress={navigateToHome}></Button>
-            <Button title="Registrar" size="lg" buttonStyle={styles.registerButton} onPress={navigateToRegister}></Button>
+            <View>
+                <IconLogo name="isv" size={150} color="#2089DC"></IconLogo>
+                <Text style={styles.textTitle}>Budega</Text>
+            </View>
+            <Text>Login</Text>
+            <TextInput style={styles.loginInput} placeholder="E-mail" placeholderTextColor="black"/>
+            <Text>Password</Text>
+            <TextInput secureTextEntry={true} style={styles.loginInput} placeholder="Senha" placeholderTextColor="black"/>
+            <View style={styles.viewRegisterForgot}>
+                <Text onPress={() => {navigation.navigate('formRegister')}} style={styles.registerForgotLink}>Create Account</Text>
+                <Text onPress={() => {navigation.navigate('forgotPassword')}} style={styles.registerForgotLink}>Forgot Password</Text>
+            </View>
+            <Button style={styles.loginButton} title="Login" onPress={() => {navigation.navigate('home')}}></Button>
         </View>
     )
 }

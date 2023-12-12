@@ -7,23 +7,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    loginButton: {
-        backgroundColor: "#09D261",
-        borderRadius: 8,
-    },
     registerButton: {
         backgroundColor: "#FCD007",
         borderRadius: 8,
         marginTop: "8%"
-    },
-    backButton: {
-        backgroundColor: "#9BCAE6",
-        borderRadius: 8,
-    },
-    carrinhoButton: {
-        backgroundColor: "#09D261",
-        borderRadius: 8,
-        marginLeft: "3%"
     },
     text: {
         fontSize: 28,
@@ -37,13 +24,33 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginBottom: "13%"
     },
+    //Login Page
+    viewRegisterForgot: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: "5%"
+    },
+    registerForgotLink: {
+        flex: 1,
+        textAlign: 'center',
+        color: '#06B6D4',
+    },
+    labelInput: {
+        marginBottom: "5%",
+        textAlign: "left"
+    },
     loginInput: {
-        color: "#202C33",
-        backgroundColor: "#757575",
+        backgroundColor: "#FFFFFF",
         width: "70%",
         marginBottom: "8%",
+        marginTop: "3%",
         borderWidth: 1,
-        borderRadius: 3
+        borderRadius: 3,
+        padding: 4
+    },
+    loginButton: {
+        backgroundColor: "#09D261",
+        borderRadius: 8,
     }
 });
 
