@@ -1,67 +1,71 @@
-import React from 'react'
-import { View } from 'react-native'
-import { Text } from 'react-native-elements'
-import { StyleSheet } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen'
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Text } from 'react-native-elements';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const styles = StyleSheet.create({
     bubbleWrapper: {
-        flexDirection: 'column',
+        flexDirection: 'row',
+        marginVertical: 6,
+        paddingHorizontal: 10,
     },
     bubbleWrapperSent: {
-        alignSelf: 'flex-start',
-        marginLeft: 40,
+        justifyContent: 'flex-end',
     },
     bubbleWrapperReceived: {
-        alignSelf: 'flex-end',
-        marginRight: 40,
+        justifyContent: 'flex-start',
     },
     balloon: {
-        padding: 8,
-        borderRadius: 5,
+        padding: 10,
+        borderRadius: 10,
+        maxWidth: '75%',
     },
     balloonSent: {
-        backgroundColor: Colors.black,
+        backgroundColor: '#DCF8C6',
     },
     balloonReceived: {
-        backgroundColor: Colors.primary,
+        backgroundColor: '#ECECEC',
     },
     balloonText: {
-        fontSize: 18,
+        fontSize: 16,
     },
     balloonTextSent: {
-        color: Colors.white,
+        color: '#000',
     },
     balloonTextReceived: {
-        color: Colors.black,
+        color: '#000',
     },
-})
-
-const Balloon = ({message, currentUser}: any) => {
-    const sent = currentUser === message.sender;
-    const ballonColor = sent ? styles.balloonSent : styles.balloonReceived;
-    const ballonTextColor = sent ? styles.balloonTextSent : styles.balloonTextReceived;
-    const bubbleWrapper = sent ? styles.bubbleWrapperSent : styles.bubbleWrapperReceived;
-
-    if (message && message.sender) {
-        return (
-            <View style={{marginBottom: '2%'}}>
-                <View style={{...styles.bubbleWrapper, ...bubbleWrapper}}>
-                    <View style={{...styles.balloon, ...ballonColor}}>
-                        <Text style={{alignSelf: 'center', color: '#848484'}}>
-                            {message.sender}
-                        </Text>
-                        <Text style={{...styles.balloonText, ...ballonTextColor}}>
-                            {message.text}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-        )
-    } else {
-        return <></>
+    senderLabel: {
+        fontSize: 12,
+        color: '#888',
+        marginBottom: 4,
+        alignSelf: 'flex-start'
     }
-    
-}
+});
 
-export default Balloon
+const Balloon = ({ message, currentUser }: any) => {
+    const isSentByUser = currentUser === message.sender;
+
+    const bubbleAlignment = isSentByUser ? styles.bubbleWrapperSent : styles.bubbleWrapperReceived;
+    const bubbleColor = isSentByUser ? styles.balloonSent : styles.balloonReceived;
+    const textColor = isSentByUser ? styles.balloonTextSent : styles.balloonTextReceived;
+
+    if (!message || !message.sender) return null;
+
+    return (
+        <View style={[styles.bubbleWrapper, bubbleAlignment]}>
+            <View style={[styles.balloon, bubbleColor]}>
+                {!isSentByUser && (
+                    <Text style={styles.senderLabel}>
+                        {message.sender}
+                    </Text>
+                )}
+                <Text style={[styles.balloonText, textColor]}>
+                    {message.text}
+                </Text>
+            </View>
+        </View>
+    );
+};
+
+export default Balloon;

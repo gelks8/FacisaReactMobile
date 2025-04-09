@@ -17,7 +17,6 @@ const ShoppingCart = ({route, navigation}: any) => {
         <Card key={item.id} containerStyle={styles.cardContainer}>
             <Card.Title style={styles.cardTitle}>{item.Name}</Card.Title>
             <Card.Divider />
-            {/* Aqui você pode personalizar a exibição do produto, se necessário */}
             <Text>Preço: R$ {item.Price}</Text>
         </Card>
     );

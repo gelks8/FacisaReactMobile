@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { SafeAreaView, ScrollView, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, ScrollView, TextInput, Touchable, TouchableOpacity, View, FlatList, KeyboardAvoidingView, Platform } from 'react-native'
 import { Text } from 'react-native-elements'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import styles from '../style/Styles';
@@ -30,39 +30,48 @@ const Chat = ({route}: any) => {
     };
 
     return (
-        <Fragment>
-            <ScrollView>
-                {
-                chat.messages.length > 0 ? 
-                    chat.messages.map((m: any, index: any) => (
-                        <Balloon key={index} message={m} currentUser={userData.name}/>
-                    )) :
-                    <Text style={{ alignSelf: 'center', color: '#848484' }}>
-                        Sem mensagens
-                    </Text>
-                }
-            </ScrollView>
-            <SafeAreaView>
-                    <View style={styles.messageTextInputContainer}>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+        >
+            <View style={{ flex: 1 }}>
+                <FlatList
+                    data={chat.messages}
+                    keyExtractor={(_, index) => index.toString()}
+                    renderItem={({ item }) => (
+                        <Balloon message={item} currentUser={userData.name} />
+                    )}
+                    ListEmptyComponent={
+                        <Text style={{ alignSelf: 'center', color: '#848484', marginTop: 20 }}>
+                            Sem mensagens
+                        </Text>
+                    }
+                    contentContainerStyle={{ padding: 10 }}
+                    inverted
+                />
+    
+                <SafeAreaView>
+                    <View style={[styles.messageTextInputContainer, { backgroundColor: '#f0f0f0', borderTopWidth: 1, borderColor: '#ccc' }]}>
                         <TextInput
                             placeholder='Digite sua mensagem...'
-                            placeholderTextColor={Colors.light}
+                            placeholderTextColor="#666"
                             value={text}
                             multiline
                             onChangeText={(message) => setText(message)}
-                        >
-
-                        </TextInput>
+                            style={{ flex: 1, paddingHorizontal: 10 }}
+                        />
                         <TouchableOpacity
                             style={styles.sendButton}
-                            disabled={!text}
-                            onPress={() => sendMessage()}
+                            disabled={!text.trim()}
+                            onPress={sendMessage}
                         >
                             <Text>Enviar</Text>
                         </TouchableOpacity>
                     </View>
-            </SafeAreaView>
-        </Fragment>
+                </SafeAreaView>
+            </View>
+        </KeyboardAvoidingView>
     );
 };
   
