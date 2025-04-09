@@ -3,6 +3,7 @@ import { Text, View, TextInput, ToastAndroid, Platform, Alert } from 'react-nati
 import styles from '../style/Styles';
 import { Button } from '@rneui/themed';
 import IconLogo from 'react-native-vector-icons/AntDesign';
+import firebaseService from '../services/firebaseService'; // <-- IMPORTANTE
 
 const Login = ({ navigation }: any) => {
     const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ const Login = ({ navigation }: any) => {
         }
     };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (email.trim() === '' || password.trim() === '') {
             showToast('Preencha todos os campos');
             return;
@@ -32,7 +33,18 @@ const Login = ({ navigation }: any) => {
             return;
         }
 
-        navigation.navigate('Home');
+        try {
+            const user = await firebaseService.findUserByEmailAndPassword(email, password);
+            if (user) {
+                showToast('Login bem-sucedido!');
+                navigation.navigate('Home');
+            } else {
+                showToast('E-mail ou senha incorretos');
+            }
+        } catch (error) {
+            console.error('Erro ao fazer login:', error);
+            showToast('Erro ao tentar logar');
+        }
     };
 
     return (
