@@ -43,7 +43,6 @@ const Chat = ({ navigation, userEmail }: ChatProps) => {
 
   const sendMessage = async () => {
     if (text.trim() === '' || !userData) return;
-    console.log('userData', userData);
     const userMessage: Message = {
       text: text.trim(),
       sender: userData.formName || 'User',

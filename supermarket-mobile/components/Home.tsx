@@ -8,6 +8,7 @@ import styles from '../style/Styles';
 const Home = ({ navigation, shoppingCart, setShoppingCart, favorites, setFavorites, userEmail }: any) => {
 
     const showToast = (message: string) => {
+        console.log("Toast:", message);
         if (Platform.OS === 'android') {
             ToastAndroid.show(message, ToastAndroid.SHORT);
         } else {
@@ -16,7 +17,6 @@ const Home = ({ navigation, shoppingCart, setShoppingCart, favorites, setFavorit
     };
 
     const handleAddToCart = (product: any) => {
-        showToast('Produto adicionado ao carrinho!');
         setShoppingCart([...shoppingCart, product]);
     };
 
