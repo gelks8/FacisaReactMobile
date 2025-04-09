@@ -4,6 +4,7 @@ import { Text } from 'react-native-elements'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import styles from '../style/Styles';
 import Balloon from './Balloon';
+import AiService from '../services/AiService'; 
 
 interface Message {
     text: string;
@@ -29,20 +30,47 @@ const Chat = ({ navigation, userEmail }: ChatProps) => {
         setUserData(userData)
     }, [userData]);
 
-    const sendMessage = () => {
-        if (text.trim() !== '') {
-            const newMessage: Message = {
-                text: text,
-                sender: userData.name,
-                timestamp: new Date().getTime(),
+    const sendMessage = async () => {
+        if (text.trim() === '') return;
+    
+        const userMessage: Message = {
+            text: text.trim(),
+            sender: userData.name,
+            timestamp: Date.now(),
+        };
+    
+        setChat((prevChat) => ({
+            messages: [...prevChat.messages, userMessage],
+        }));
+    
+        setText('');
+    
+        try {
+            const aiReplyText = await AiService.prompt(userMessage.text);
+    
+            const aiMessage: Message = {
+                text: aiReplyText,
+                sender: 'IA Gemini',
+                timestamp: Date.now(),
             };
-
-            setChat((prevChat: ChatContent) => ({
-                messages: [...prevChat.messages, newMessage]
+    
+            setChat((prevChat) => ({
+                messages: [...prevChat.messages, aiMessage],
             }));
-            setText('');
+        } catch (error) {
+            console.error('Erro ao chamar IA:', error);
+            const errorMessage: Message = {
+                text: 'Desculpe, ocorreu um erro ao responder.',
+                sender: 'IA Gemini',
+                timestamp: Date.now(),
+            };
+    
+            setChat((prevChat) => ({
+                messages: [...prevChat.messages, errorMessage],
+            }));
         }
     };
+    
 
     return (
         <KeyboardAvoidingView
@@ -51,9 +79,6 @@ const Chat = ({ navigation, userEmail }: ChatProps) => {
             keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
         >
             <View style={{ flex: 1 }}>
-                <Text style={{ padding: 10, fontWeight: 'bold', color: '#333' }}>
-                    Usuário: {userEmail}
-                </Text>
                 <FlatList
                     data={[...chat.messages].reverse()}
                     keyExtractor={(_, index) => index.toString()}
