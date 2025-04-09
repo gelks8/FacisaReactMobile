@@ -30,8 +30,13 @@ const ShoppingCart = ({ navigation, shoppingCart, setShoppingCart, userEmail }: 
         }
 
         try {
+            const filteredItems = shoppingCart.map((item: any) => ({
+                Name: item.Name,
+                Price: item.Price,
+            }));
+
             const purchaseData = {
-                items: shoppingCart,
+                items: filteredItems,
                 date: new Date().toISOString(),
                 total: calculateTotal(),
             };
@@ -40,10 +45,8 @@ const ShoppingCart = ({ navigation, shoppingCart, setShoppingCart, userEmail }: 
 
             showToast('Compra finalizada com sucesso!');
 
-            // 🧹 Esvaziar o carrinho
             setShoppingCart([]);
 
-            // 🔁 Voltar para Home
             navigation.navigate('Home', { userEmail });
         } catch (error) {
             console.error('Erro ao finalizar compra:', error);

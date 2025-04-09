@@ -58,7 +58,6 @@ const formatTimestamp = (timestamp: number) => {
 
 const Balloon = ({ message, currentUser }: any) => {
     const isSentByUser = currentUser === message.sender;
-
     const bubbleAlignment = isSentByUser ? styles.bubbleWrapperSent : styles.bubbleWrapperReceived;
     const bubbleColor = isSentByUser ? styles.balloonSent : styles.balloonReceived;
 
@@ -69,7 +68,7 @@ const Balloon = ({ message, currentUser }: any) => {
             <View style={[styles.balloon, bubbleColor]}>
                 {!isSentByUser && (
                     <Text style={styles.senderLabel}>
-                        {message.sender === 'Gemini' ? 'IA Gemini' : message.sender}
+                        {message.sender === 'IA Gemini' ? 'IA Gemini' : message.sender}
                     </Text>
                 )}
                 <Text style={styles.balloonText}>

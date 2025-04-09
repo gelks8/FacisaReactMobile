@@ -18,9 +18,29 @@ const AiService = {
         const response = await result.response;
         return response.text();
     },
-    longContext: () => {
+    longContext: async (userData, question) => {
+        const context  = `
+        Você está conversando com o usuário abaixo. Responda considerando seus dados:
 
+        Nome: ${userData.name || ''}
+        Email: ${userData.formEmail || ''}
+        Histórico de compras: ${JSON.stringify(userData.purchaseHistory || [])}
+
+        Pergunta: ${question}
+        `;
+    
+        const result = await model.generateContent({
+            contents: [
+                {
+                    role: 'user',
+                    parts: [{ text: context }],
+                },
+            ],
+        });
+    
+        const response = await result.response;
+        return response.text();
     }
-}
+};
 
 export default AiService

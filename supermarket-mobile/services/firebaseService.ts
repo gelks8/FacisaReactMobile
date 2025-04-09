@@ -32,6 +32,17 @@ const firebaseService = {
         await updateDoc(userRef, {
             purchaseHistory: arrayUnion(purchase)
         });
+    },
+    getUserDataByEmail: async (email: string) => {
+        const usersRef = collection(firestore, 'Users');
+        const q = query(usersRef, where('formEmail', '==', email));
+        const snapshot = await getDocs(q);
+        
+        if (!snapshot.empty) {
+            return snapshot.docs[0].data();
+        } else {
+            return null;
+        }
     }
 }
 
