@@ -27,17 +27,17 @@ const Login = ({ navigation }: any) => {
             showToast('Preencha todos os campos');
             return;
         }
-
+    
         if (!isValidEmail(email)) {
             showToast('E-mail inválido');
             return;
         }
-
+    
         try {
             const user = await firebaseService.findUserByEmailAndPassword(email, password);
             if (user) {
                 showToast('Login bem-sucedido!');
-                navigation.navigate('Home');
+                navigation.navigate('Home', { userEmail: email });
             } else {
                 showToast('E-mail ou senha incorretos');
             }

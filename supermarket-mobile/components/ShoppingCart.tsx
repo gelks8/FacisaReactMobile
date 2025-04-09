@@ -1,23 +1,59 @@
-import React from 'react'
-import { FlatList, ScrollView, Text, View } from 'react-native';
+import React from 'react';
+import { FlatList, Text, View, Alert, ToastAndroid, Platform } from 'react-native';
 import styles from '../style/Styles';
 import { Card, Button } from 'react-native-elements';
+import firebaseService from '../services/firebaseService';
 
-const ShoppingCart = ({route, navigation}: any) => {
-    const {shoppingCart} = route.params
+const ShoppingCart = ({ route, navigation }: any) => {
+    const { shoppingCart, userEmail } = route.params;
+
+    const showToast = (message: string) => {
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(message, ToastAndroid.SHORT);
+        } else {
+            Alert.alert('Aviso', message);
+        }
+    };
 
     const calculateTotal = () => {
-        return shoppingCart.reduce((total: number, product: any) => {
-            const price = parseFloat(product.Price.replace(',', '.'));
-            return total + price;
-        }, 0).toFixed(2);
+        return shoppingCart
+            .reduce((total: number, product: any) => {
+                const price = parseFloat(product.Price.replace(',', '.'));
+                return total + price;
+            }, 0)
+            .toFixed(2);
     };
-    
-    const renderProductCard = ({item}: {item: any}) => (
+
+    const handleCheckout = async () => {
+        if (!userEmail) {
+            showToast('Erro: Usuário não autenticado.');
+            return;
+        }
+
+        try {
+            const purchaseData = {
+                items: shoppingCart,
+                date: new Date().toISOString(),
+                total: calculateTotal(),
+            };
+
+            await firebaseService.updateUserPurchaseHistory(userEmail, purchaseData);
+
+            showToast('Compra finalizada com sucesso!');
+            navigation.navigate('Home', { userEmail }); // 👈 Corrigido aqui
+        } catch (error) {
+            console.error('Erro ao finalizar compra:', error);
+            showToast('Erro ao salvar a compra.');
+        }
+    };
+
+    const renderProductCard = ({ item }: { item: any }) => (
         <Card key={item.id} containerStyle={styles.cardContainer}>
-            <Card.Title style={styles.cardTitle}>{item.Name}</Card.Title>
-            <Card.Divider />
-            <Text>Preço: R$ {item.Price}</Text>
+            <>
+                <Card.Title style={styles.cardTitle}>{item.Name}</Card.Title>
+                <Card.Divider />
+                <Text>Preço: R$ {item.Price}</Text>
+            </>
         </Card>
     );
 
@@ -30,10 +66,14 @@ const ShoppingCart = ({route, navigation}: any) => {
             />
             <View style={styles.footer}>
                 <Text style={styles.totalText}>Total: R$ {calculateTotal()}</Text>
-                <Button title="Finalizar Compra" onPress={() => {navigation.navigate('Login')}} buttonStyle={styles.checkoutButton} />
+                <Button
+                    title="Finalizar Compra"
+                    onPress={handleCheckout}
+                    buttonStyle={styles.checkoutButton}
+                />
             </View>
         </View>
-    )
-}
+    );
+};
 
-export default ShoppingCart
+export default ShoppingCart;

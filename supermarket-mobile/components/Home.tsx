@@ -1,26 +1,18 @@
 import React from 'react';
-import { Text, ScrollView, ToastAndroid, Alert, Platform } from 'react-native';
-import { FAB } from '@rneui/themed';
-import { Card } from 'react-native-elements';
+import { Text, ScrollView, ToastAndroid, Alert, Platform, View } from 'react-native';
+import { FAB, Button } from '@rneui/themed';
 import { StatusBar } from 'expo-status-bar';
 import Products from './Products';
 import styles from '../style/Styles';
 
-const Home = ({ navigation, shoppingCart, setShoppingCart, favorites, setFavorites }: any) => {
+const Home = ({ route, navigation, shoppingCart, setShoppingCart, favorites, setFavorites }: any) => {
+    const { userEmail } = route.params;
 
     const showToast = (message: string) => {
         if (Platform.OS === 'android') {
             ToastAndroid.show(message, ToastAndroid.SHORT);
         } else {
             Alert.alert('Aviso', message);
-        }
-    };
-
-    const removeFavorite = (product: any) => {
-        for (let i = 0; i < favorites.length; i++) {
-            if (favorites[i].name === product.name) {
-                favorites.splice(i, 1);
-            }
         }
     };
 
@@ -33,11 +25,23 @@ const Home = ({ navigation, shoppingCart, setShoppingCart, favorites, setFavorit
         navigation.navigate('Chat');
     };
 
+    const openCart = () => {
+        navigation.navigate('ShoppingCart', {
+            shoppingCart: shoppingCart,
+            userEmail: userEmail
+        });
+    };
+
     return (
         <>
             <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16 }}>
                 <StatusBar backgroundColor='black' />
                 <Products onAddToCart={handleAddToCart} openToast={showToast} />
+                <Button
+                    title="Ir para o Carrinho"
+                    onPress={openCart}
+                    buttonStyle={{ marginTop: 20, backgroundColor: '#2089DC' }}
+                />
             </ScrollView>
             <FAB
                 style={styles.fab}

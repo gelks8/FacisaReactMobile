@@ -1,5 +1,5 @@
 import app from '../firebaseConfig';
-import { collection, getFirestore, addDoc, getDocs, query, where } from 'firebase/firestore/lite'
+import { collection, getFirestore, addDoc, getDocs, query, where, updateDoc, arrayUnion, doc } from 'firebase/firestore/lite'
 
 const firestore = getFirestore(app);
 
@@ -18,6 +18,20 @@ const firebaseService = {
         const q = query(col, where('formEmail', '==', email), where('formPassword', '==', password));
         const snapshot = await getDocs(q);
         return snapshot.docs.length > 0 ? snapshot.docs[0].data() : null;
+    },
+    updateUserPurchaseHistory: async (email: string, purchase: any) => {
+        const usersRef = collection(firestore, 'Users');
+        const q = query(usersRef, where('formEmail', '==', email));
+        const snapshot = await getDocs(q);
+        
+        if (snapshot.empty) throw new Error('Usuário não encontrado');
+        
+        const userDoc = snapshot.docs[0];
+        const userRef = doc(firestore, 'Users', userDoc.id);
+        
+        await updateDoc(userRef, {
+            purchaseHistory: arrayUnion(purchase)
+        });
     }
 }
 
