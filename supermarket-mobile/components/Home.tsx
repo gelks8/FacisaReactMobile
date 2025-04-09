@@ -5,8 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import Products from './Products';
 import styles from '../style/Styles';
 
-const Home = ({ route, navigation, shoppingCart, setShoppingCart, favorites, setFavorites }: any) => {
-    const { userEmail } = route.params;
+const Home = ({ navigation, shoppingCart, setShoppingCart, favorites, setFavorites, userEmail }: any) => {
 
     const showToast = (message: string) => {
         if (Platform.OS === 'android') {

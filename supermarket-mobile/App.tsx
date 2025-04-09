@@ -15,6 +15,7 @@ const App = () => {
   const Stack = createStackNavigator();
   const [shoppingCart, setShoppingCart] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [userEmail, setUserEmail] = useState('');
 
   return (
     <NavigationContainer>
@@ -35,7 +36,10 @@ const App = () => {
                 <View style={{ flexDirection: 'row' }}>
                   <IconButtons
                     onPress={() =>
-                      navigation.navigate('ShoppingCart', { shoppingCart })
+                      navigation.navigate('ShoppingCart', {
+                        shoppingCart,
+                        userEmail,
+                      })
                     }
                     name="shoppingcart"
                     size={28}
@@ -57,16 +61,24 @@ const App = () => {
             };
           }}
         >
-          {({ navigation, route }) => (
-            <Home
-              navigation={navigation}
-              route={route} // <-- corrigido aqui
-              shoppingCart={shoppingCart}
-              setShoppingCart={setShoppingCart}
-              favorites={favorites}
-              setFavorites={setFavorites}
-            />
-          )}
+          {({ navigation, route }) => {
+            const incomingEmail = route.params?.userEmail;
+            if (incomingEmail && incomingEmail !== userEmail) {
+              setUserEmail(incomingEmail);
+            }
+
+            return (
+              <Home
+                navigation={navigation}
+                route={route}
+                shoppingCart={shoppingCart}
+                setShoppingCart={setShoppingCart}
+                favorites={favorites}
+                setFavorites={setFavorites}
+                userEmail={userEmail} // passamos também para o Home
+              />
+            );
+          }}
         </Stack.Screen>
         <Stack.Screen
           name="FormRegister"
@@ -94,12 +106,20 @@ const App = () => {
         />
         <Stack.Screen
           name="ShoppingCart"
-          component={ShoppingCart}
           options={{
             headerTitle: 'Carrinho de Compras',
             headerTitleAlign: 'center',
           }}
-        />
+        >
+          {({ navigation }) => (
+            <ShoppingCart
+              navigation={navigation}
+              shoppingCart={shoppingCart}
+              setShoppingCart={setShoppingCart}
+              userEmail={userEmail}
+            />
+          )}
+        </Stack.Screen>
         <Stack.Screen
           name="Favorites"
           options={{

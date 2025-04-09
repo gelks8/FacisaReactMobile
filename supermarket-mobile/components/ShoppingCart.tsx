@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList, Text, View, Alert, ToastAndroid, Platform } from 'react-native';
 import styles from '../style/Styles';
 import { Card, Button } from 'react-native-elements';
 import firebaseService from '../services/firebaseService';
 
-const ShoppingCart = ({ route, navigation }: any) => {
-    const { shoppingCart, userEmail } = route.params;
+const ShoppingCart = ({ navigation, shoppingCart, setShoppingCart, userEmail }: any) => {
 
     const showToast = (message: string) => {
         if (Platform.OS === 'android') {
@@ -40,7 +39,12 @@ const ShoppingCart = ({ route, navigation }: any) => {
             await firebaseService.updateUserPurchaseHistory(userEmail, purchaseData);
 
             showToast('Compra finalizada com sucesso!');
-            navigation.navigate('Home', { userEmail }); // 👈 Corrigido aqui
+
+            // 🧹 Esvaziar o carrinho
+            setShoppingCart([]);
+
+            // 🔁 Voltar para Home
+            navigation.navigate('Home', { userEmail });
         } catch (error) {
             console.error('Erro ao finalizar compra:', error);
             showToast('Erro ao salvar a compra.');
@@ -63,6 +67,7 @@ const ShoppingCart = ({ route, navigation }: any) => {
                 data={shoppingCart}
                 renderItem={renderProductCard}
                 keyExtractor={(product) => product.id.toString()}
+                ListEmptyComponent={<Text style={styles.totalText}>Carrinho vazio.</Text>}
             />
             <View style={styles.footer}>
                 <Text style={styles.totalText}>Total: R$ {calculateTotal()}</Text>
@@ -70,6 +75,7 @@ const ShoppingCart = ({ route, navigation }: any) => {
                     title="Finalizar Compra"
                     onPress={handleCheckout}
                     buttonStyle={styles.checkoutButton}
+                    disabled={shoppingCart.length === 0}
                 />
             </View>
         </View>
