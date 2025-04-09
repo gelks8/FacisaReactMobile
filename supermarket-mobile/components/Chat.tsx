@@ -47,7 +47,7 @@ const Chat = ({ route }: any) => {
         >
             <View style={{ flex: 1 }}>
                 <FlatList
-                    data={chat.messages}
+                    data={[...chat.messages].reverse()}
                     keyExtractor={(_, index) => index.toString()}
                     renderItem={({ item }) => (
                         <Balloon message={item} currentUser={userData.name} />
