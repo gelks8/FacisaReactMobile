@@ -98,12 +98,15 @@ const App = () => {
         />
         <Stack.Screen
           name="Chat"
-          component={Chat}
           options={{
             headerTitle: 'Chat',
             headerTitleAlign: 'center',
           }}
-        />
+        >
+          {({ navigation }) => (
+            <Chat navigation={navigation} userEmail={userEmail} />
+          )}
+        </Stack.Screen>
         <Stack.Screen
           name="ShoppingCart"
           options={{

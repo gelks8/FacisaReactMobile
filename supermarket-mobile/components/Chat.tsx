@@ -15,7 +15,12 @@ interface ChatContent {
     messages: Message[];
 }
 
-const Chat = ({ route }: any) => {
+interface ChatProps {
+    navigation: any;
+    userEmail: string;
+}
+
+const Chat = ({ navigation, userEmail }: ChatProps) => {
     const [text, setText] = useState('');
     const [chat, setChat] = useState<ChatContent>({ messages: [] });
     const [userData, setUserData] = useState({ name: 'Gerson' });
@@ -46,6 +51,9 @@ const Chat = ({ route }: any) => {
             keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
         >
             <View style={{ flex: 1 }}>
+                <Text style={{ padding: 10, fontWeight: 'bold', color: '#333' }}>
+                    Usuário: {userEmail}
+                </Text>
                 <FlatList
                     data={[...chat.messages].reverse()}
                     keyExtractor={(_, index) => index.toString()}
