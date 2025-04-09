@@ -1,30 +1,40 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { SafeAreaView, ScrollView, TextInput, Touchable, TouchableOpacity, View, FlatList, KeyboardAvoidingView, Platform } from 'react-native'
+import { SafeAreaView, ScrollView, TextInput, TouchableOpacity, View, FlatList, KeyboardAvoidingView, Platform } from 'react-native'
 import { Text } from 'react-native-elements'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import styles from '../style/Styles';
 import Balloon from './Balloon';
 
-const Chat = ({route}: any) => {
-    const content: any = {messages: []}
-    const [text, setText] = useState('')
-    const [chat, setChat] = useState(content)
-    const [userData, setUserData] = useState({name: 'Gerson'})
+interface Message {
+    text: string;
+    sender: string;
+    timestamp: number;
+}
 
-    useEffect (() => {
+interface ChatContent {
+    messages: Message[];
+}
+
+const Chat = ({ route }: any) => {
+    const [text, setText] = useState('');
+    const [chat, setChat] = useState<ChatContent>({ messages: [] });
+    const [userData, setUserData] = useState({ name: 'Gerson' });
+
+    useEffect(() => {
         setUserData(userData)
-    }, [userData])
+    }, [userData]);
 
     const sendMessage = () => {
         if (text.trim() !== '') {
-            const newMessage = {
+            const newMessage: Message = {
                 text: text,
                 sender: userData.name,
                 timestamp: new Date().getTime(),
             };
-            console.log('newMessage', newMessage);
 
-            setChat((prevChat) => ({ messages: [...prevChat.messages, newMessage] }));
+            setChat((prevChat: ChatContent) => ({
+                messages: [...prevChat.messages, newMessage]
+            }));
             setText('');
         }
     };
@@ -50,23 +60,33 @@ const Chat = ({route}: any) => {
                     contentContainerStyle={{ padding: 10 }}
                     inverted
                 />
-    
+
                 <SafeAreaView>
                     <View style={[styles.messageTextInputContainer, { backgroundColor: '#f0f0f0', borderTopWidth: 1, borderColor: '#ccc' }]}>
                         <TextInput
                             placeholder='Digite sua mensagem...'
-                            placeholderTextColor="#666"
+                            placeholderTextColor="#888"
                             value={text}
                             multiline
-                            onChangeText={(message) => setText(message)}
-                            style={{ flex: 1, paddingHorizontal: 10 }}
+                            onChangeText={setText}
+                            style={{
+                                flex: 1,
+                                paddingHorizontal: 12,
+                                paddingVertical: 8,
+                                backgroundColor: '#fff',
+                                borderRadius: 20,
+                                borderWidth: 1,
+                                borderColor: '#ddd',
+                                fontSize: 16,
+                                maxHeight: 100,
+                            }}
                         />
                         <TouchableOpacity
                             style={styles.sendButton}
                             disabled={!text.trim()}
                             onPress={sendMessage}
                         >
-                            <Text>Enviar</Text>
+                            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Enviar</Text>
                         </TouchableOpacity>
                     </View>
                 </SafeAreaView>
@@ -74,5 +94,5 @@ const Chat = ({route}: any) => {
         </KeyboardAvoidingView>
     );
 };
-  
+
 export default Chat;

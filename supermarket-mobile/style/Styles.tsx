@@ -84,23 +84,20 @@ const styles = StyleSheet.create({
     },
     messageTextInputContainer: {
         justifyContent: 'flex-end',
-        paddingHorizontal: 5,
-        paddingVertical: 5,
-        borderColor: 'transparent',
-        borderTopColor: 'blue',
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        borderTopWidth: 1,
+        borderTopColor: '#ccc',
+        backgroundColor: '#f2f2f2',
         alignItems: 'center',
-        flexDirection: 'row'
-
+        flexDirection: 'row',
     },
     sendButton: {
-        backgroundColor: Colors.primary,
-        color: Colors.white,
-        height: 40,
-        width: 70,
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#0a66c2',
+        paddingHorizontal: 16,
+        paddingVertical: 10,
         borderRadius: 20,
-        marginRight: 5,
+        marginLeft: 8,
     }
 });
 
